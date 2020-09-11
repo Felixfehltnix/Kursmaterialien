@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         cardHeader.addEventListener("click", (event) => {
-          event.preventDefault()
+          event.preventDefault()                           // wenn JS nicht installiert ist dann zeige die aufgeklappte Seite.
           cardBody.classList.toggle("d-none")
             if(icon.classList.contains("fa-angle-double-down")){
               icon.classList.remove("fa-angle-double-down")
