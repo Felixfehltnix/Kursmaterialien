@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const cardBody = cardHeader.nextElementSibling
         const icon = cardHeader.children[0].children[0]
 
-
+dsafsdafefwa
 
         cardHeader.addEventListener("click", (event) => {
           event.preventDefault()                           // wenn JS nicht installiert ist dann zeige die aufgeklappte Seite.
