@@ -1,23 +1,25 @@
 "use strict"
 
+
 document.addEventListener("DOMContentLoaded", () => {
-  const addStudentButton = document.getElementById("add-student")
 
-  addStudentButton.addEventListener("click", () => {
-    const liElement = document.createElement("li")
-    liElement.classList.add("list-group-item")
+    const addStudent = document.getElementById("add-student")
 
-    const strongElement = document.createElement("strong")
+    let studentCounter = 0
 
-    /*
-    const textNode = document.createTextNode("Hallo Welt")
-    strongElement.appendChild(textNode)
-    */
-    strongElement.appendChild(document.createTextNode("Hallo Welt"))
+    addStudent.addEventListener("click", () => {
 
-    liElement.appendChild(strongElement)
+        const liElement = document.createElement("li");
+        liElement.innerText = "Student " + studentCounter.toString(10)
+        liElement.classList.add("list-group-item")
+        studentCounter++
 
-    const ulElement = document.querySelector("ul.list-group")
-    ulElement.appendChild(liElement)
-  })
-}) 
+        const strongElement = document.createElement("strong")
+        strongElement.innerText = "BoldText"
+        liElement.appendChild(strongElement)
+
+        const ulElement = document.querySelector("ul.list-group")
+        ulElement.appendChild(liElement)
+
+    })
+})
