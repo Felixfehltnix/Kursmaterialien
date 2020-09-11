@@ -1,0 +1,1 @@
+Das hier ist der Inhalt der datei.txt

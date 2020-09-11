@@ -1,0 +1,33 @@
+Aufgabe!
+
+Schaue dir das Paket "axios" an. Damit kannst du sehr einfach 
+Daten aus dem Internet herunterladen und in Node.JS verarbeiten.
+
+Schaue dir anschließend die Liste von öffentlichen APIs an. 
+Schreibe ein Programm, welches eine dieser APIs einliest,
+und die Ergebnisse über ein console.log ausgibt.
+
+Arbeite dich dazu eigenständig in axios und die entsprechende
+API hinein. Eine Liste von vielen, guten APIs findest du hier:
+
+=> https://github.com/toddmotto/public-apis
+
+Ideen:
+- Age of Empires II: Gebe eine Liste aller Zivilisationen aus
+- Jokes: Gebe einen zufälligen Witz aus
+- New York Times: Gebe die Titel der aktuellen News aus
+- World Bank: Gebe alle Länder aus
+
+Tipp:
+
+- Manche APIs benötigen einen Login oder einen sogenannten API-Key. Dann
+  wirst du dich dort registrieren müssen, und einen anfordern müssen.
+
+- Ggf. funktioniert eine der APIs nicht mehr, wenn du diesen Kurs guckst.
+  In dem Fall würde ich dich bitten, die Liste der öffentlichen APIs
+  nach einer anderen Idee zu durchsuchen.
+
+- Viele APIs können sowohl mit JSON, als auch in XML antworten. Eine 
+  Antwort in JSON kannst du über JSON.parse() einlesen - eine Antwort
+  in XML über das Paket xml2js. Das müsstest du dir dann aber noch 
+  separat auf npmjs anschauen ;)
