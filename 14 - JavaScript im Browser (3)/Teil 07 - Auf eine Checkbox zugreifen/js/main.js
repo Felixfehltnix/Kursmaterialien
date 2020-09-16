@@ -6,13 +6,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputElement = document.getElementById("nameInput")
     const agbInput = document.getElementById("agbInput")
 
-
     // const liElements = document.getElementsByTagName("li")           // TODO: warum werden die neuen Elemente nicht entfernt?
     // for (const liElement of liElements) {
     //     liElement.addEventListener("click", () => {
     //         liElement.remove()
     //     })
     // }
+
+
 
     let counter = 0
     addStudentButton.addEventListener("click", (event) => {
@@ -38,11 +39,8 @@ document.addEventListener("DOMContentLoaded", () => {
         counter++
         if (counter % 2 === 0) {
             liElement.style.backgroundColor = "grey"
-        } else {
-            if (counter % 2 === 1){
-            liElement.style.backgroundColor = "blue"
-            }
         }
+
         liElement.appendChild(strongElement)
 
         StudentsList.appendChild(liElement)
@@ -56,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
             })
         }
     })
+
 
 
 })
