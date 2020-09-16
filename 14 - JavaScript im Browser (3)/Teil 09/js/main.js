@@ -8,17 +8,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const studentList = document.getElementById("students-list")
   const agbInput = document.getElementById("agbInput")
 
-  const liElements = document.querySelectorAll(".list-group-item")
+const liElements = document.querySelectorAll(".list-group-item")
 
-  const removeLiElement = (liElement) => {
+const removeliElement = (liElement) => {
     liElement.remove()
-  }
+}
 
-  for (const liElement of liElements) {
-    liElement.addEventListener("click", () => {
-      removeLiElement(liElement)
-    })
-  }
+for (const liElement of liElements) {
+  liElement.addEventListener("click",()=>{
+    removeliElement(liElement)
+  })
+
+}
 
 
   addStudentButton.addEventListener("click", (event) => {
@@ -44,8 +45,8 @@ document.addEventListener("DOMContentLoaded", () => {
     liElement.appendChild(strongElement)
     liElement.classList.add("list-group-item")
 
-    liElement.addEventListener("click", () => {
-      removeLiElement(liElement)
+    liElement.addEventListener("click",()=>{
+      removeliElement(liElement)
     })
 
     studentList.appendChild(liElement)

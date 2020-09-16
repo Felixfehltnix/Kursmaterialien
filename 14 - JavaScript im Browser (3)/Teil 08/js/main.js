@@ -38,10 +38,12 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 
 
-  nameInput.addEventListener("keydown", (event) => {
-    if (event.keyCode === KEY_ENTER) {
-      alert("Enter wurde gedrückt!")
+  nameInput.addEventListener("keydown",(event)=>{
+
+    if (event.keyCode === KEY_ENTER){
+      alert("enter wurde gedrückt")
     }
+
 
   })
   
