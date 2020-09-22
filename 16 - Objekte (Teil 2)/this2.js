@@ -1,10 +1,12 @@
 "use strict"
 
 const data = {
-  todos: ["JavaScript lernen", "Node.JS lernen"],
+  todos: ["Java lernen", "node.js lernen"],
   addTodo: function(todo) {
     this.todos.push(todo)
   }
 }
 
-data.addTodo("4. Todo")
+const a = data.addTodo
+
+a("3.Todo")

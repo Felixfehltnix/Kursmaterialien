@@ -34,8 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			}
 		}
 		*/
-		let todoCounter = todoListElement.querySelectorAll("li:not(.completed)").length
-		todoCountElement.innerText = todoCounter
+		todoCountElement.innerText = todoListElement.querySelectorAll("li:not(.completed)").length
 
 		let completedCounter = todoListElement.querySelectorAll("li.completed").length
 		if (completedCounter === 0) {
@@ -103,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	})
 
 
-	clearCompletedElement.addEventListener("click", (event) => {
+	clearCompletedElement.addEventListener("click", () => {
 		const completedLiElements = todoListElement.querySelectorAll("li.completed")
 		for(const completedLiElement of completedLiElements) {
 			completedLiElement.remove()
