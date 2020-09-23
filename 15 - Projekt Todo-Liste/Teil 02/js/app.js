@@ -66,3 +66,13 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	})
 });
+function greeting(name) {
+	alert("hello " + name);
+}
+
+function processUserInput(callback){
+	let name = prompt("please enter your name.");
+	callback(name);
+}
+
+processUserInput(greeting)

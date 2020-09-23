@@ -6,7 +6,7 @@ const studentModule = {
     this.students.push(name)
 
     bankModule.chargeForStudent(name)
-    // dsvgoModule.shipLetterToStudent(name)
+    dsgvoModule.shipLetterToStudent(name)
   }
 }
 
@@ -16,12 +16,10 @@ const bankModule = {
   }
 }
 
-const dsvgoModule = {
-  /*
+const dsgvoModule = {
   shipLetterToStudent(name) {
     console.log("Datenschutzbrief wird geschickt für: " + name)
   }
-  */
 }
 
 // Es wird ein Teilnehmer hinzugefügt!

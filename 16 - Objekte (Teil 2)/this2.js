@@ -7,6 +7,6 @@ const data = {
   }
 }
 
-const a = data.addTodo
 
-a("3.Todo")
+data.addTodo("3.Todo")
+

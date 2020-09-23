@@ -10,6 +10,7 @@ const data = {
     runCallback(() => this.todos.push(todo))
     console.log(this)
   }
+}
   /*
   addTodo: function(todo) {
     runCallback(() => {
@@ -17,5 +18,5 @@ const data = {
     })
   }
   */
-}
-data.addTodo("Etwas essen")
+
+data.addTodo("Etwas futtern")
