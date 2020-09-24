@@ -3,31 +3,25 @@
 const studentModule = {
   students: ["Max Müller"],
 
-  /*
-  onAddStudent: [
-    function(name) {
-      console.log("studentModule: " + name)
-    }
-  ],
-  */
   onAddStudent: [],
 
-  addStudent(name) {
-    this.students.push(name)
+  addStudents(name){
+    this.studentModule.push(name)
 
-    for(const f of this.onAddStudent) {
+    for (const f of this.onAddStudent){
       f(name)
     }
   }
 }
 
 const bankModule = {
-  chargeForStudent(name) {
-    console.log("Beitrag wird abgebucht für: " + name)
+  chargeForStudent(name){
+    console.log("Beitrag für " + name + " wird abgebucht.")
   }
 }
-studentModule.onAddStudent.push((name) => {
+
+studentModule.onAddStudent.push((name)=>{
   bankModule.chargeForStudent(name)
 })
 
-studentModule.addStudent("Max Mustermann!")
+studentModule.addStudent("Ina Müller")

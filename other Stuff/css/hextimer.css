@@ -17,5 +17,17 @@ body {
     font-size: 100px;
     top: 50%;
     left: 50%;
+}
 
+#callback-btn {
+    font-family: KacstFarsi, sans-serif;
+    float: right;
+    font-size: 1rem;
+    font-weight: bold;
+    color: olivedrab;
+    background-color: #4f1a15;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    box-shadow: 0 0 20px black;
 }
