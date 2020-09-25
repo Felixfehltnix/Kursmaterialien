@@ -5,9 +5,9 @@
 const student = Object.create(Object.prototype, {
   firstname: {
     value: "Max",       // Der initialie Wert
-    writable: false,     // Darf dieser Wert überschrieben werden?
+    writable: true,     // Darf dieser Wert überschrieben werden?
                         // Beispiel: student.firstname = "Maximilian"
-    configurable: false, // Darf diese Eigenschaft per "delete" gelöscht werden?
+    configurable: true, // Darf diese Eigenschaft per "delete" gelöscht werden?
                         // Beispiel: delete student.firstname
     enumerable: true    // Taucht diese Eigenschaft in Schleifen auf?
                         // for (const key in student) { console.log(key) }
@@ -26,13 +26,10 @@ const student = Object.create(Object.prototype, {
   }
 })
 
-// student.subjects = ["Deutsch", "Englisch"]
-student.subjects.push("Deutsch")
 
-for (const key in student) {
-  console.log("key:", key)
+
+for (const key in student){
+  console.log(key)
 }
-// delete student.firstname
-// student.firstname = "Maximilian"
 
-console.log(student)
+console.log(Object.getOwnPropertyDescriptor(student, "firstname"))

@@ -1,19 +1,6 @@
 "use strict"
 
 
-// setTimeout(()=>{
-//     console.log("this message is shown after 3 seconds")
-// },3000);
-//
-// document.addEventListener("DOMContentLoaded",()=>{
-//
-//     const button = document.getElementById("callback-btn");
-//
-//     button.addEventListener("click",()=>{
-//         alert("button clicked");
-//     })
-//
-// })
 
 //===================================================================================================
 
@@ -30,10 +17,10 @@ const students = [
 //===================================================================================================
 
 const processStudents = function (data, callback){
-    for (const i in data){
-        if (data[i].school.toLowerCase() === "east" || data[i].school.toLowerCase() === "west"){
+    for (const entry of data){
+        if (entry.school.toLowerCase() === "east" || entry.school.toLowerCase() === "west"){
             if (typeof callback === "function") {
-                callback(data[i]);
+                callback(entry);
             }
         }
     }

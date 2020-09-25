@@ -14,6 +14,7 @@ const studentModule = {
     this.students.push(name)
     
     this.emit("add", name)
+
   },
 
   /**
