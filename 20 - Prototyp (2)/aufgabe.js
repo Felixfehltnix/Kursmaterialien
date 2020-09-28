@@ -37,32 +37,38 @@
  *     dass ein Wert nicht in einem console.log auftaucht.
  */
 
-const students = [
-  {
-    firstname: "Max",
-    lastname: "Müller",
-    yearOfBirth: 1990,
-    password: "sehrsicher",
-    getAge() {
-      const yearNow = (new Date()).getFullYear()
-      return yearNow - this.yearOfBirth
-    }
-  },
-  {
-    firstname: "Erika",
-    lastname: "Mustermann",
-    yearOfBirth: 1985,
-    password: "errätkeiner",
-    getAge() {
-      const yearNow = (new Date()).getFullYear()
-      return yearNow - this.yearOfBirth
-    }
-  }
+
+function Movie(title, yearOfRelease, PG, password){
+  this.title = title
+  this.PG = PG
+  Object.defineProperty(this, "yearOfRelease", {
+    value: yearOfRelease,
+    enumerable: true,
+    configurable: false,
+    writable: false
+  })
+  Object.defineProperty(this, "password", {
+    value: password,
+    enumerable: false,
+    configurable: true,
+    writable: true
+  })
+}
+
+Movie.prototype.getAge = function (){
+  const yearNow = (new Date()).getFullYear()
+  return yearNow - this.yearOfRelease
+}
+
+const movies = [
+    new Movie("Titanic", 1995, 13, "JamesCameronisbest"),
+    new Movie("PickOfDestiny", 2001, 16, "tenaciousDatenschutz"),
 ]
 
+
 // Das Alter sollte weiterhin ausgegeben werden
-console.log("students[0].getAge():", students[0].getAge())
-console.log("students[1].getAge():", students[1].getAge())
+console.log("students[0].getAge():", movies[0].getAge())
+console.log("students[1].getAge():", movies[1].getAge())
 
 
 // Hier werden die Daten in JSON umgewandelt. Dies ist ein gängies
@@ -70,4 +76,5 @@ console.log("students[1].getAge():", students[1].getAge())
 // Smartphone-App schicken möchten.
 //
 // Hier sollte das Passwort nicht mit ausgegeben werden!
-console.log("JSON.stringify(students):", JSON.stringify(students))
+
+console.log("JSON.stringify(students):", JSON.stringify(movies))

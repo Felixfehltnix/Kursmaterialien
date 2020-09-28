@@ -1,6 +1,6 @@
 "use strict"
 
-function Student(firstname, lastname) {
+function Student(firstname, lastname,) {
   this.firstname = firstname
   this.lastname = lastname
 }
