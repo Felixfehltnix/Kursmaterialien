@@ -1,37 +1,36 @@
 "use Strict"
 
 calcModule = {
-    dezToDual(num){
-        let bin = 0
+
+    dezToDual(num) {
+        let binary = ""
         while (num !== 0) {
-            bin = num % 2
-            num = num / 2
+            if (num % 2 === 0) {
+                binary = "0" + binary
+            } else {
+                binary = "1" + binary
+            }
+            num = Math.floor(num / 2)
         }
-        return num
+        return binary
     }
+
 }
 
 
-
-document.addEventListener("DOMContentLoaded", ()=>{
+document.addEventListener("DOMContentLoaded", () => {
 
     const dez = document.getElementById("dez")
     const btn = document.querySelector("#btn")
-    const container = document.querySelector("#container")
+    const result = document.querySelector("#result").children[0]
 
-    btn.addEventListener("click", ()=>{
+    btn.addEventListener("click", () => {
         number = dez.value
 
-        const newNumber = document.createElement("h6");
-        newNumber.innerText = calcModule.dezToDual(number).toString()
-        newNumber.style.fontSize = "5rem"
-        newNumber.style.margin = "0"
-        container.appendChild(newNumber)
+        result.innerText = calcModule.dezToDual(number).toString() + "<---- Binär für Tini"
 
-
-
-
+        dez.value= "";
 
     })
 
-    })
+})

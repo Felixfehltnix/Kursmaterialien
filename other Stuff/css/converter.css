@@ -1,0 +1,43 @@
+*{
+    box-sizing: border-box;
+}
+#dez:focus{
+    outline: transparent;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #0c5460;
+}
+
+strong{
+    font-size: 2rem;
+}
+
+#result{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    width: 400px;
+}
+
+#container {
+    margin: auto;
+    width: 400px;
+}
+
+#dez{
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
+#btn {
+    display: block;
+}

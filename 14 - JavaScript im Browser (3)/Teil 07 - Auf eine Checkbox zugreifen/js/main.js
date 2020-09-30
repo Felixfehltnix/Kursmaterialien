@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputElement = document.getElementById("nameInput")
     const agbInput = document.getElementById("agbInput")
 
-    // const liElements = document.getElementsByTagName("li")           // TODO: warum werden die neuen Elemente nicht entfernt?
+    // const liElements = document.getElementsByTagName("li")   // TODO: warum werden die neuen Elemente nicht entfernt?
     // for (const liElement of liElements) {
     //     liElement.addEventListener("click", () => {
     //         liElement.remove()
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         inputElement.value = ""
 
-        const liElements = document.getElementsByTagName("li")           // TODO: warum werden die alten Elemente "nicht" entfernt?
+        const liElements = document.getElementsByTagName("li")     // TODO: warum werden die alten Elemente "nicht" entfernt?
         for (const liElement of liElements) {
             liElement.addEventListener("click", () => {
                 liElement.remove()

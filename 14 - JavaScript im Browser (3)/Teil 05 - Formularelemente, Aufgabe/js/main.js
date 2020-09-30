@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const addStudentButton = document.getElementById("add-student")
 
 
-    counter++
+    let counter = 0
 
     addStudentButton.addEventListener("click", (event) => {
         event.preventDefault()

@@ -78,3 +78,5 @@ console.log("students[1].getAge():", movies[1].getAge())
 // Hier sollte das Passwort nicht mit ausgegeben werden!
 
 console.log("JSON.stringify(students):", JSON.stringify(movies))
+
+
