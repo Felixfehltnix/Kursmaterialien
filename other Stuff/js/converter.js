@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", () => {
         number = dez.value
 
-        result.innerText = calcModule.dezToDual(number).toString() + "<---- Binär für Tini"
+        result.innerText = calcModule.dezToDual(number).toString()
 
         dez.value= "";
 

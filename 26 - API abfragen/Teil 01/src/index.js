@@ -1,20 +1,16 @@
 "use strict"
 
-const axios = require("axios")
+// const productApi = require("./api/product")
+//
+// const search = productApi.search
+// const info = productApi.info
 
-// Produktsuche!
-/*
-axios
-  .post("https://api.nal.usda.gov/fdc/v1/search", {
-    generalSearchInput: "Cheddar Cheese"
-  }, {
-    auth: {
-      username: "f30b8Dr9qFteNLSfCtaOIQX1SHHJSxOIrwfb87Vo"
-    }
-  })
-  .then((response) => {
-    console.log(response.data)
-  })
-*/
+const {search, info} = require("./api/product")
 
-const fdcId = 380925
+// search("Apple").then((response)=>{
+//     console.log(response)
+// })
+
+info(169909).then((res)=>{
+    console.log(res)
+    })
