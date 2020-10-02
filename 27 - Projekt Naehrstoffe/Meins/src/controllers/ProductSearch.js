@@ -5,24 +5,26 @@ const EventEmitter = require("eventemitter3")
 const {search} = require("../api/product")
 const {on} = require("../utilitys/dom")
 
+
+// =====================================================================================================================
 /**
  *
- * @param inputElement
- * @param buttonElement
- * @param resultElement
+ * @param {HTMLElement} inputElement
+ * @param {HTMLElement} buttonElement
+ * @param {HTMLElement} resultElement
  * @constructor
  */
 // constructor
-//                                                     1
+
 function ProductSearch(inputElement, buttonElement, resultElement) {
     this.inputElement = inputElement
-    this.buttonElement = buttonElement
-    this.resultElement = resultElement
+    this.buttonElement = buttonElement                                // Die Constructor Funktion erstellt, wenn sie aufgerufen wird ein neues objekt erstellt und zeigt mit this auf das neue objekt
+    this.resultElement = resultElement                                // das neue objekt hat also die keys inputElement, button..., result..., events
 
     this.events = new EventEmitter()
 }
 
-//                                                     3
+// =====================================================================================================================
 ProductSearch.prototype.init = function () {
     this.buttonElement.addEventListener("click", (event) => {
         event.preventDefault()

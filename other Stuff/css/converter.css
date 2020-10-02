@@ -32,6 +32,8 @@ strong{
     padding: 0;
     width: 200px;
     height: 200px;
+    border-style: none;
+    box-shadow: 0 0 8px black;
     border-radius: 50%;
     background-color: black;
     color: white;
