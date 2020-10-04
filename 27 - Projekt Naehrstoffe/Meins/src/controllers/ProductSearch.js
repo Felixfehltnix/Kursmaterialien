@@ -40,6 +40,8 @@ ProductSearch.prototype.init = function () {
     })
 }
 
+// =====================================================================================================================
+
 /**
  *
  * @param {string} term
@@ -57,8 +59,6 @@ ProductSearch.prototype.runSearch = function (term) {
                 linkElement.innerText = result["description"]
                 this.resultElement.appendChild(linkElement)
             }
-
-            console.log(results)
         })
 }
 
