@@ -25,6 +25,7 @@ function ProductSearch(inputElement, buttonElement, resultElement) {
 }
 
 // =====================================================================================================================
+
 ProductSearch.prototype.init = function () {
     this.buttonElement.addEventListener("click", (event) => {
         event.preventDefault()

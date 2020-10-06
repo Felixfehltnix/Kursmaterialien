@@ -3,12 +3,15 @@
 const {info} = require("../api/product")
 const addProductTemplate = require("../templates/productList/addProduct.ejs")
 const {on} = require("../utilitys/dom")
+const EventEmitter = require("eventemitter3")
 
 // =====================================================================================================================
 
 function ProductList(listElement) {
     this.listElement = listElement
     this.products = []                              // Array soll alle Produkte speichern die in die Liste hinzugefügt werden.
+
+    this.events = new EventEmitter()
 }
 
 // =====================================================================================================================
@@ -25,6 +28,14 @@ ProductList.prototype.init = function () {
         this.updateAmount(fdcId, value)
         this.getNutrients()
     })
+}
+
+// Holt sich meine Nährstoffangaben und packe sie als Ereigniss in meinen EventEmitter.
+// =====================================================================================================================
+
+ProductList.prototype.emitNutrients = function () {
+    const nutrients = this.getNutrients()
+    this.events.emit("nutrientChange", nutrients)
 }
 
 // =====================================================================================================================
@@ -51,9 +62,9 @@ ProductList.prototype.getNutrientsPerProduct = function (product) {
         }
     }
     return {
-        carbs: (nutrients.carbs /100) * product.amount,
-        protein: (nutrients.protein /100) * product.amount,
-        fat: (nutrients.fat /100) * product.amount
+        carbs: (nutrients.carbs / 100) * product.amount,
+        protein: (nutrients.protein / 100) * product.amount,
+        fat: (nutrients.fat / 100) * product.amount
     }
 }
 
@@ -65,9 +76,9 @@ ProductList.prototype.getNutrients = function () {
     }
     for (const product of this.products) {
         const productNutrients = this.getNutrientsPerProduct(product)
-        nutrients.carbs+=productNutrients.carbs
-        nutrients.protein+=productNutrients.protein
-        nutrients.fat+=productNutrients.fat
+        nutrients.carbs += productNutrients.carbs
+        nutrients.protein += productNutrients.protein
+        nutrients.fat += productNutrients.fat
     }
     return nutrients
 }
@@ -82,6 +93,7 @@ ProductList.prototype.updateAmount = function (fdcId, value) {
             break
         }
     }
+    this.emitNutrients()
 }
 
 // =====================================================================================================================
@@ -100,12 +112,20 @@ ProductList.prototype.removeProduct = function (fdcId) {
         const trElement = document.querySelector(".product-tablerow-element[data-fdc='" + fdcId + "']")
         trElement.remove()
     }
+    this.emitNutrients()
 }
 
 // =====================================================================================================================
 
 // läd daten von der api, speichert sie in 'product'.
 ProductList.prototype.addProduct = function (fdcId) {
+    // produkte sollen nicht doppelt hinzugefügt werden.
+    for(const product of this.products){
+        if (product.product["fdcId"].toString() === fdcId.toString()){
+            return alert("Produkte sollen nicht doppelt in die Liste aufgenommen werden.")
+        }
+    }
+//========================================================
     info(fdcId)
         .then((product) => {
             this.products.push({
@@ -119,7 +139,8 @@ ProductList.prototype.addProduct = function (fdcId) {
             // this.listElement.innerHTML = this.listElement.innerHTML + productHtml    // !LANGSAM! schreibt den in der ejs Datei erzeugten html code in das listElement auf der DOM. Durch Innerhtml wird der text in die Html Baum struktur umgewandelt.
             this.listElement.insertAdjacentHTML("beforeend", productHtml)    // insertAdjacentHTML sorgt dafür das nur ein neues Element(tr) erstellt wird und nicht immer alle + 1
 
-            this.getNutrients()
+            // this.getNutrients()
+            this.emitNutrients()
         })
 }
 
