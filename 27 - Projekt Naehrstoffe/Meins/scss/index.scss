@@ -3,9 +3,17 @@
 @import "~bootswatch/dist/darkly/bootswatch";
 
 .product-amount {
-  border: 0px solid transparent;
+  border: 0 solid transparent;
   background-color: transparent;
   color: $body-color;
-  padding: 0px;
+  padding: 0;
   max-width: 4rem;
+}
+.list-group span {
+  float: right;
+  width: 94px;
+}
+
+.loader {
+  margin: .5rem 0 .4rem 115px;
 }

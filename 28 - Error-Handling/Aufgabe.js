@@ -18,9 +18,13 @@ const FOLDER_NAME = "./existiert-nicht"
  * Achtung: Sync()-Funktionen sind langsam, und sollten im Produktiv-Code
  * vermieden werden!
  */
-const files = fs.readdirSync(FOLDER_NAME)
-console.log("Im Ordner liegen: " + files.length + " Dateien")
 
+try {
+    const files = fs.readdirSync(FOLDER_NAME)
+    console.log("Im Ordner liegen: " + files.length + " Dateien")
+} catch (error) {
+    console.warn("Auf den Ordner konnte nicht zugegriffen werden.")
+}
 /*
  * Aufgabe 2: 
  *
@@ -33,7 +37,11 @@ console.log("Im Ordner liegen: " + files.length + " Dateien")
  * Stattdessen soll eine verständliche Fehlermeldung ausgegeben werden.
  */
 fs.readdir(FOLDER_NAME, (err, files) => {
-  console.log("Im Ordner liegen: " + files.length + " Dateien")
+    if (err !== null) {
+        console.warn("(2) Auf den Ordner konnte nicht zugegriffen werden.")
+        return
+    }
+    console.log("(2)Im Ordner liegen: " + files.length + " Dateien")
 })
 
 /*
@@ -46,13 +54,19 @@ fs.readdir(FOLDER_NAME, (err, files) => {
  * dafür, dass der Fehler abgefangen wird!
  */
 const filesAsPromise = new Promise((resolve, reject) => {
-  fs.readdir(FOLDER_NAME, (err, files) => {
-    if (err) return reject(err)
-    resolve(files)
-  })
+    fs.readdir(FOLDER_NAME, (err, files) => {
+        if (err) {
+            return reject(err)
+        }
+        resolve(files)
+    })
 })
 
 // Nur Code ab hier ändern!
-filesAsPromise.then((files) => {
-  console.log("Im Ordner liegen: " + files.length + " Dateien")
-})
+filesAsPromise
+    .then((files) => {
+        console.log("(3)Im Ordner liegen: " + files.length + " Dateien")
+    })
+    .catch((err) => {
+        console.warn("(3) Auf den Ordner konnte nicht zugegriffen werden.")
+    })

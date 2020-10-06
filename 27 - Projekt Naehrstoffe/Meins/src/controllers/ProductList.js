@@ -2,6 +2,7 @@
 
 const {info} = require("../api/product")
 const addProductTemplate = require("../templates/productList/addProduct.ejs")
+const loader = require("../templates/productList/loader.ejs")
 const {on} = require("../utilitys/dom")
 const EventEmitter = require("eventemitter3")
 
@@ -10,7 +11,6 @@ const EventEmitter = require("eventemitter3")
 function ProductList(listElement) {
     this.listElement = listElement
     this.products = []                              // Array soll alle Produkte speichern die in die Liste hinzugefügt werden.
-
     this.events = new EventEmitter()
 }
 
@@ -30,7 +30,7 @@ ProductList.prototype.init = function () {
     })
 }
 
-// Holt sich meine Nährstoffangaben und packe sie als Ereigniss in meinen EventEmitter.
+// Holt sich meine Nährstoffangaben und packt sie als Ereignis in meinen EventEmitter.
 // =====================================================================================================================
 
 ProductList.prototype.emitNutrients = function () {
@@ -39,7 +39,6 @@ ProductList.prototype.emitNutrients = function () {
 }
 
 // =====================================================================================================================
-
 
 ProductList.prototype.getNutrientsPerProduct = function (product) {
     const nutrients = {
@@ -85,7 +84,6 @@ ProductList.prototype.getNutrients = function () {
 
 // =====================================================================================================================
 
-
 ProductList.prototype.updateAmount = function (fdcId, value) {
     for (const product of this.products) {
         if (product.product["fdcId"] === fdcId) {
@@ -120,12 +118,15 @@ ProductList.prototype.removeProduct = function (fdcId) {
 // läd daten von der api, speichert sie in 'product'.
 ProductList.prototype.addProduct = function (fdcId) {
     // produkte sollen nicht doppelt hinzugefügt werden.
-    for(const product of this.products){
-        if (product.product["fdcId"].toString() === fdcId.toString()){
+    for (const product of this.products) {
+        if (product.product["fdcId"].toString() === fdcId.toString()) {
             return alert("Produkte sollen nicht doppelt in die Liste aufgenommen werden.")
         }
     }
+
 //========================================================
+    this.listElement.insertAdjacentHTML("beforeend", loader())
+
     info(fdcId)
         .then((product) => {
             this.products.push({
@@ -138,10 +139,15 @@ ProductList.prototype.addProduct = function (fdcId) {
             })
             // this.listElement.innerHTML = this.listElement.innerHTML + productHtml    // !LANGSAM! schreibt den in der ejs Datei erzeugten html code in das listElement auf der DOM. Durch Innerhtml wird der text in die Html Baum struktur umgewandelt.
             this.listElement.insertAdjacentHTML("beforeend", productHtml)    // insertAdjacentHTML sorgt dafür das nur ein neues Element(tr) erstellt wird und nicht immer alle + 1
-
+            document.querySelector(".loader").remove()
             // this.getNutrients()
             this.emitNutrients()
         })
+        .catch((err) => {
+            document.querySelector(".loader").remove()
+            alert("produkt konnte nicht hinzugefügt werden, bitte noch einmal versuchen.")
+        })
 }
+
 
 module.exports = ProductList

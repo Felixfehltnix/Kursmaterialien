@@ -16,5 +16,4 @@ fs.readFile("test.txt", {encoding: "utf-8"}, (err, contents) => {
     return
   }
   console.log(contents.split(" "))
-
 })
