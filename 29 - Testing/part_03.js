@@ -1,11 +1,12 @@
-"use strict"
+"use Strict"
 
-const students = []
 
-function addStudent(name) {
-  if (students.indexOf(name) === -1) {
-    students.push(name)
-  }
+const students = [];
+
+function addStudent(name){
+    if(students.indexOf(name) === -1){
+        students.push(name)
+    }
 }
 
 module.exports.students = students

@@ -2,6 +2,7 @@
 
 function StudentModule() {
   this.students = []
+
 }
 
 StudentModule.prototype.addStudent = function(name) {

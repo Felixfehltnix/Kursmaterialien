@@ -1,13 +1,13 @@
-"use strict"
+"use Strict"
 
 function StudentModule() {
-  this.students = []
+    this.students = []
 }
 
 StudentModule.prototype.addStudent = function(name) {
-  if (this.students.indexOf(name) === -1) {
-    this.students.push(name)
-  }
+    if(this.students.indexOf(name) === -1){
+        this.students.push(name)
+    }
 }
 
 module.exports = StudentModule

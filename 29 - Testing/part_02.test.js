@@ -1,9 +1,8 @@
 "use strict"
 
-const generateGreeting = require("./part_02")
-// https://jestjs.io/docs/en/using-matchers
+const generateGreeting = require("./part_02");
 
-test("It should generate a message", () => {
-  const greeting = generateGreeting("Max Müller")
-  expect(greeting.indexOf("Max Müller") !== -1).toBe(true)
+test("it should generate a message",()=>{
+    const greeting = generateGreeting("Felix")
+    expect(greeting.indexOf("Felix") !== -1).toBe(true);
 })

@@ -1,21 +1,20 @@
-"use strict"
+"use Strict"
 
-const {students, addStudent} = require("./part_03")
+const {addStudent, students} = require("./part_03");
 
-beforeEach(() => {
-  students.splice(0, students.length)
-  students.push("Max Mustermann")
+beforeEach(()=>{
+    students.splice(0, students.length)
+    students.push("felix becker")
 })
 
-test("It should add a student", () => {
-  addStudent("Max Müller")
-
-  expect(students.length).toBe(2)
-  expect(students).toContain("Max Müller")
+test("Student should be added to Array", ()=>{
+    addStudent("felix")
+    expect(students.length).toBe(2)
+    expect(students).toContain("felix")
 })
 
-test("It should not add a student if she/he exists already", () => {
-  addStudent("Max Mustermann")
 
-  expect(students.length).toBe(1)
+test("It should not add a student if students exists already", ()=>{
+    addStudent("felix becker")
+    expect(students.length).toBe(1)
 })

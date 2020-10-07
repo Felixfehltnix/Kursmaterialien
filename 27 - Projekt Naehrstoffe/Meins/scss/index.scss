@@ -9,6 +9,7 @@
   padding: 0;
   max-width: 4rem;
 }
+
 .list-group span {
   float: right;
   width: 94px;
@@ -17,3 +18,7 @@
 .loader {
   margin: .5rem 0 .4rem 115px;
 }
+#productSearchResults:hover {
+  cursor: pointer;
+}
+

@@ -1,7 +1,7 @@
 "use strict"
 
 function generateGreeting(name) {
-  return "Guten Tag, " + name + "!!"
+    return "Liebe Gruesse, dein " + name + "!";
 }
 
 module.exports = generateGreeting

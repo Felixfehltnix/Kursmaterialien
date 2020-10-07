@@ -60,10 +60,12 @@ ProductSearch.prototype.runSearch = function (term) {
                 linkElement.innerText = result["description"]
                 this.resultElement.appendChild(linkElement)
             }
+
         })
         .catch((err)=>{
-            alert("es ist ein Fehler aufgetreten, bitte nochmal neu nach Produkt suchen.")
+            alert("es ist ein Fehler aufgetreten, bitte nochmal neu nach dem Produkt suchen.")
         })
+
 }
 
 module.exports = ProductSearch

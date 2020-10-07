@@ -115,7 +115,7 @@ ProductList.prototype.removeProduct = function (fdcId) {
 
 // =====================================================================================================================
 
-// läd daten von der api, speichert sie in 'product'.
+// läd Daten von der api, speichert sie in 'product'.
 ProductList.prototype.addProduct = function (fdcId) {
     // produkte sollen nicht doppelt hinzugefügt werden.
     for (const product of this.products) {
@@ -125,23 +125,12 @@ ProductList.prototype.addProduct = function (fdcId) {
     }
 
 //========================================================
-    this.listElement.insertAdjacentHTML("beforeend", loader())
 
+    this.listElement.insertAdjacentHTML("beforeend", loader())
     info(fdcId)
         .then((product) => {
-            this.products.push({
-                product: product,
-                amount: 100
-            })                           // fügt das aufgerufene Produkt dem Array hinzu. Sorgt dafür das auf alle Eigenschaften des Produktes zugegriffen werden kann.
-            const productHtml = addProductTemplate({              // gibt die Daten an die ejs Datei weiter und ändert den Title Wert auf "description" Der Inhalt der variable ist einfacher html text
-                title: product['description'],
-                fdcId: product['fdcId']
-            })
-            // this.listElement.innerHTML = this.listElement.innerHTML + productHtml    // !LANGSAM! schreibt den in der ejs Datei erzeugten html code in das listElement auf der DOM. Durch Innerhtml wird der text in die Html Baum struktur umgewandelt.
-            this.listElement.insertAdjacentHTML("beforeend", productHtml)    // insertAdjacentHTML sorgt dafür das nur ein neues Element(tr) erstellt wird und nicht immer alle + 1
+            this.addFetchedProduct(product)
             document.querySelector(".loader").remove()
-            // this.getNutrients()
-            this.emitNutrients()
         })
         .catch((err) => {
             document.querySelector(".loader").remove()
@@ -149,5 +138,22 @@ ProductList.prototype.addProduct = function (fdcId) {
         })
 }
 
+// =====================================================================================================================
+
+ProductList.prototype.addFetchedProduct = function (product) {
+    this.products.push({
+        product: product,
+        amount: 100
+    })                           // fügt das aufgerufene Produkt dem Array hinzu. Sorgt dafür das auf alle Eigenschaften des Produktes zugegriffen werden kann.
+    const productHtml = addProductTemplate({              // gibt die Daten an die ejs Datei weiter und ändert den Title Wert auf "description" Der Inhalt der variable ist einfacher html text
+        title: product['description'],
+        fdcId: product['fdcId']
+    })
+    // this.listElement.innerHTML = this.listElement.innerHTML + productHtml    // !LANGSAM! schreibt den in der ejs Datei erzeugten html code in das listElement auf der DOM. Durch Innerhtml wird der text in die Html Baum struktur umgewandelt.
+    this.listElement.insertAdjacentHTML("beforeend", productHtml)    // insertAdjacentHTML sorgt dafür das nur ein neues Element(tr) erstellt wird und nicht immer alle + 1
+    // document.querySelector(".loader").remove()
+
+    this.emitNutrients()
+}
 
 module.exports = ProductList
