@@ -1,10 +1,11 @@
 "use strict"
 
-require("../scss/index.scss")
+import "../scss/index.scss"
 
-const ProductSearch = require("./controllers/ProductSearch")
-const ProductList = require("./controllers/ProductList")
-const ProductNutrients = require("./controllers/ProductNutrients")
+import ProductSearch from "./controllers/ProductSearch"
+import ProductList from "./controllers/ProductList"
+import ProductNutrients from "./controllers/ProductNutrients"
+
 
 // =====================================================================================================================
 

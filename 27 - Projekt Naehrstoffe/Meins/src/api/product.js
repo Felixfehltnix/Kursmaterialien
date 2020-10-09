@@ -1,22 +1,22 @@
 "use strict"
 
-const axios = require("axios")
+import axios from "axios"
 
 const auth = {
-  username: "mNsLkfeN1lSZdWiAhsgPGs7WJkB6BWI8g7sYjq8t"
+    username: "mNsLkfeN1lSZdWiAhsgPGs7WJkB6BWI8g7sYjq8t"
 }
 
-module.exports.search = function search(term) {
-  return axios
-    .post("https://api.nal.usda.gov/fdc/v1/search", {
-      generalSearchInput: term
-    }, {auth})
-    .then((response) => response.data['foods'])
+export async function search(term) {
+    const url = "https://api.nal.usda.gov/fdc/v1/search"
+    const response = await axios
+        .post(url, {generalSearchInput: term}, {auth})
+    return response.data['foods']
 }
 
-module.exports.info = function info(fdcId) {
-  return axios
-    .get("https://api.nal.usda.gov/fdc/v1/" + fdcId, {auth})
-    .then((response) => response.data)
+export async function info(fdcId) {
+    const url = "https://api.nal.usda.gov/fdc/v1/"
+    const response = await axios
+        .get(url + fdcId, {auth})
+        return response.data
 }
 

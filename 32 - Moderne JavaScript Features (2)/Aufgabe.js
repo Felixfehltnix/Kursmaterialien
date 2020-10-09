@@ -24,6 +24,10 @@ let products = [
 //     zurück in die Variable schreiben lassen:
 //     products = products.map(...)
 
+products = products.map((value) => {
+
+})
+
 // 1b) Schreibe ein Programm, welches prüft, ob es ein Produkt
 //     mit mehr als 50g Fett gibt. Wenn ja, dann soll "true"
 //     ausgegeben werden, wenn nicht, "false".

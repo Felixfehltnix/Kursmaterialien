@@ -1,6 +1,6 @@
 "use strict"
 
-const ProductNutrients = require("./ProductNutrients")
+import ProductNutrients from "./ProductNutrients"
 
 describe("ProductNutrients", () => {
     let carbElement, proteinElement, fatElement, productNutrients

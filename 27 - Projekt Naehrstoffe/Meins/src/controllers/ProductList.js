@@ -1,159 +1,146 @@
 "use strict"
 
-const {info} = require("../api/product")
-const addProductTemplate = require("../templates/productList/addProduct.ejs")
-const loader = require("../templates/productList/loader.ejs")
-const {on} = require("../utilitys/dom")
-const EventEmitter = require("eventemitter3")
+import {info} from "../api/product"
+import {on} from "../utilitys/dom"
+import addProductTemplate from "../templates/productList/addProduct.ejs"
+import loader from "../templates/productList/loader.ejs"
+import EventEmitter from "eventemitter3"
+
 
 // =====================================================================================================================
 
-function ProductList(listElement) {
-    this.listElement = listElement
-    this.products = []                              // Array soll alle Produkte speichern die in die Liste hinzugefügt werden.
-    this.events = new EventEmitter()
-}
+export default class ProductList {
+
+    constructor(listElement) {
+        this.listElement = listElement
+        this.products = []                                               // Array soll alle Produkte speichern die in die Liste hinzugefügt werden.
+        this.events = new EventEmitter()
+    }
 
 // =====================================================================================================================
 
-ProductList.prototype.init = function () {
-    on(".product_search_addProduct-remove", "click", (event) => {
-        const fdcId = parseInt(event.handleObj.getAttribute("data-fdc"), 10)
-        this.removeProduct(fdcId)
-    })
+    init() {
+        on(".product_search_addProduct-remove", "click", (event) => {
+            const fdcId = parseInt(event.handleObj.getAttribute("data-fdc"), 10)
+            this.removeProduct(fdcId)
+        })
 
-    on(".product-search_amount", "change", (event) => {
-        const fdcId = parseInt(event.handleObj.getAttribute("data-fdc"), 10)
-        const value = parseInt(event.handleObj.value, 10)
-        this.updateAmount(fdcId, value)
-        this.getNutrients()
-    })
-}
+        on(".product-search_amount", "change", (event) => {
+            const fdcId = parseInt(event.handleObj.getAttribute("data-fdc"), 10)
+            const value = parseInt(event.handleObj.value, 10)
+            this.updateAmount(fdcId, value)
+            this.getNutrients()
+        })
+    }
 
 // Holt sich meine Nährstoffangaben und packt sie als Ereignis in meinen EventEmitter.
 // =====================================================================================================================
 
-ProductList.prototype.emitNutrients = function () {
-    const nutrients = this.getNutrients()
-    this.events.emit("nutrientChange", nutrients)
-}
+    emitNutrients() {
+        const nutrients = this.getNutrients()
+        this.events.emit("nutrientChange", nutrients)
+    }
 
 // =====================================================================================================================
 
-ProductList.prototype.getNutrientsPerProduct = function (product) {
-    const nutrients = {
-        carbs: 0,
-        protein: 0,
-        fat: 0
+    getNutrientsPerProduct(product) {
+        const getAmount = (number) => {
+            const nutrient = product.product.foodNutrients
+                .find(foodNutrient => foodNutrient.nutrient.number === number)
+            if (nutrient) {
+                return nutrient.amount
+            } else {
+                return 0
+            }
+        }
+        const nutrients = {
+            carbs: getAmount("205"),
+            protein: getAmount("203"),
+            fat: getAmount("204")
+        }
+        return {
+            carbs: (nutrients.carbs / 100) * product.amount,
+            protein: (nutrients.protein / 100) * product.amount,
+            fat: (nutrients.fat / 100) * product.amount
+        }
     }
 
-    for (const foodNutrient of product.product.foodNutrients) {
-        const number = foodNutrient.nutrient.number
-
-        if (number === "205") {
-            nutrients.carbs = foodNutrient.amount
-        }
-        if (number === "204") {
-            nutrients.fat = foodNutrient.amount
-        }
-        if (number === "203") {
-            nutrients.protein = foodNutrient.amount
-        }
+    getNutrients() {
+        return this.products
+            .map(this.getNutrientsPerProduct, this)
+            .reduce((prev, cur) => {
+                prev.carbs += cur.carbs
+                prev.protein += cur.protein
+                prev.fat += cur.fat
+                return prev
+            }, {
+                carbs: 0,
+                protein: 0,
+                fat: 0
+            })
     }
-    return {
-        carbs: (nutrients.carbs / 100) * product.amount,
-        protein: (nutrients.protein / 100) * product.amount,
-        fat: (nutrients.fat / 100) * product.amount
-    }
-}
-
-ProductList.prototype.getNutrients = function () {
-    const nutrients = {
-        carbs: 0,
-        protein: 0,
-        fat: 0
-    }
-    for (const product of this.products) {
-        const productNutrients = this.getNutrientsPerProduct(product)
-        nutrients.carbs += productNutrients.carbs
-        nutrients.protein += productNutrients.protein
-        nutrients.fat += productNutrients.fat
-    }
-    return nutrients
-}
 
 // =====================================================================================================================
 
-ProductList.prototype.updateAmount = function (fdcId, value) {
-    for (const product of this.products) {
-        if (product.product["fdcId"] === fdcId) {
-            product.amount = value
-            break
+    updateAmount(fdcId, value) {
+        for (const product of this.products) {
+            if (product.product["fdcId"] === fdcId) {
+                product.amount = value
+                break
+            }
         }
+        this.emitNutrients()
     }
-    this.emitNutrients()
-}
 
 // =====================================================================================================================
 // entfernt ein Product(anhand fdcId gefunden) aus der ElementList
-ProductList.prototype.removeProduct = function (fdcId) {
-    let index = null
-    for (const i in this.products) {                               // geht den Index der Produkte im Array durch solange bis ein produkt gefunden wird welches als Eigenschaft fdcId die gleiche ID hat als die des geklickten products
-        const product = this.products[i]
-        if (product.product["fdcId"] === fdcId) {
-            index = i
-            break
+    removeProduct(fdcId) {
+        let index = this.products
+            .findIndex(product => product.product["fdcId"] === fdcId)          // geht den Index der Produkte im Array durch solange bis ein produkt gefunden wird welches als Eigenschaft fdcId die gleiche ID hat als die des geklickten products
+
+        if (index !== null) {
+            this.products.splice(index, 1)
+            const trElement = document.querySelector(".product-tablerow-element[data-fdc='" + fdcId + "']")
+            trElement.remove()
         }
+        this.emitNutrients()
     }
-    if (index !== null) {
-        this.products.splice(index, 1)
-        const trElement = document.querySelector(".product-tablerow-element[data-fdc='" + fdcId + "']")
-        trElement.remove()
-    }
-    this.emitNutrients()
-}
 
 // =====================================================================================================================
 
 // läd Daten von der api, speichert sie in 'product'.
-ProductList.prototype.addProduct = function (fdcId) {
-    // produkte sollen nicht doppelt hinzugefügt werden.
-    for (const product of this.products) {
-        if (product.product["fdcId"].toString() === fdcId.toString()) {
-            return alert("Produkte sollen nicht doppelt in die Liste aufgenommen werden.")
+    async addProduct(fdcId) {
+        const exists = this.products
+            .find(product => product.product["fdcId"].toString() === fdcId.toString())
+        if (exists) return alert("Produkte sollen nicht doppelt in die Liste aufgenommen werden.")
+
+        this.listElement.insertAdjacentHTML("beforeend", loader())
+
+        try {
+            const product = await info(fdcId)
+            this.addFetchedProduct(product)
+            document.querySelector(".loader").remove()
+        } catch (err) {
+            document.querySelector(".loader").remove()
+            alert("produkt konnte nicht hinzugefügt werden, bitte noch einmal versuchen.")
         }
     }
 
-//========================================================
-
-    this.listElement.insertAdjacentHTML("beforeend", loader())
-    info(fdcId)
-        .then((product) => {
-            this.addFetchedProduct(product)
-            document.querySelector(".loader").remove()
-        })
-        .catch((err) => {
-            document.querySelector(".loader").remove()
-            alert("produkt konnte nicht hinzugefügt werden, bitte noch einmal versuchen.")
-        })
-}
 
 // =====================================================================================================================
 
-ProductList.prototype.addFetchedProduct = function (product) {
-    this.products.push({
-        product: product,
-        amount: 100
-    })                           // fügt das aufgerufene Produkt dem Array hinzu. Sorgt dafür das auf alle Eigenschaften des Produktes zugegriffen werden kann.
-    const productHtml = addProductTemplate({              // gibt die Daten an die ejs Datei weiter und ändert den Title Wert auf "description" Der Inhalt der variable ist einfacher html text
-        title: product['description'],
-        fdcId: product['fdcId']
-    })
-    // this.listElement.innerHTML = this.listElement.innerHTML + productHtml    // !LANGSAM! schreibt den in der ejs Datei erzeugten html code in das listElement auf der DOM. Durch Innerhtml wird der text in die Html Baum struktur umgewandelt.
-    this.listElement.insertAdjacentHTML("beforeend", productHtml)    // insertAdjacentHTML sorgt dafür das nur ein neues Element(tr) erstellt wird und nicht immer alle + 1
-    // document.querySelector(".loader").remove()
+    addFetchedProduct(product) {
+        this.products.push({
+            product: product,
+            amount: 100
+        })                                                                      // fügt das aufgerufene Produkt dem Array hinzu. Sorgt dafür das auf alle Eigenschaften des Produktes zugegriffen werden kann.
+        const productHtml = addProductTemplate({                                // gibt die Daten an die ejs Datei weiter und ändert den Title Wert auf "description" Der Inhalt der variable ist einfacher html text
+            title: product['description'],
+            fdcId: product['fdcId']
+        })
+        // this.listElement.innerHTML = this.listElement.innerHTML + productHtml // !LANGSAM! schreibt den in der ejs Datei erzeugten html code in das listElement auf der DOM. Durch Innerhtml wird der text in die Html Baum struktur umgewandelt.
+        this.listElement.insertAdjacentHTML("beforeend", productHtml)     // insertAdjacentHTML sorgt dafür das nur ein neues Element(tr) erstellt wird und nicht immer alle + 1
 
-    this.emitNutrients()
+        this.emitNutrients()
+    }
 }
-
-module.exports = ProductList

@@ -1,10 +1,9 @@
 "use Strict"
 
-const ProductList = require("./ProductList")
+import ProductList from "./ProductList"
 
 describe("ProductList", () => {
     let productList, listElement
-
 
     beforeEach(() => {
         listElement = document.createElement("tbody")
@@ -32,6 +31,21 @@ describe("ProductList", () => {
             expect(listElement.querySelector("#testId").textContent)
                 .toBe("Test-Product")
 
+            expect(listElement.querySelector(".product-tablerow-element")
+                .getAttribute("data-fdc"))
+                .toBe("123456")
+
+            expect(listElement.querySelector(".product_search_addProduct-remove")
+                .getAttribute("data-fdc"))
+                .toBe("123456")
+
+        })
+
+        test("It should trigger a nutrientChange", done => {
+            productList.events.on("nutrientChange", (nutrients)=>{
+                done()
+            })
+            productList.addFetchedProduct(product)
         })
 
 

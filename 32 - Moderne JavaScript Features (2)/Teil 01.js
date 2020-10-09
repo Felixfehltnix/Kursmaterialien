@@ -1,28 +1,35 @@
 "use strict"
 
-const numbers = [1, 2, 3, 4]
 
-/*
-const numbers2 = []
-for(const n of numbers) {
-  numbers2.push(n * 2)
-}
-*/
-/*
-const numbers2 = numbers.map((value) => {
-  return value * 2
+const numbers = [2, 4, 6, 8]
+
+
+const numbers1 = numbers.map((value, index) => {
+    return value * index
 })
-*/
-const numbers2 = numbers.map((value) => value * 2)
-console.log("numbers2:", numbers2)
 
-const students = [
-  {firstname: "Max", lastname: "Mustermann"},
-  {firstname: "Erika", lastname: "Mustermann"},
-  {firstname: "Tobias", lastname: "Mustermann"},
-]
+console.log(numbers1)
 
-const names = students
-  .map((value, i) => `${i + 1}: ${value.firstname} ${value.lastname}`)
 
-console.log("names:", names)
+const movies = [
+    {name: "titanic", pga: "13", releaseYear: "1996"},
+    {name: "titanic", pga: "13", releaseYear: "1996"},
+    {name: "titanic", pga: "13", releaseYear: "1996"},
+    {name: "titanic", pga: "13", releaseYear: "1996"},
+    {name: "Toy Story", pga: "15", releaseYear: "2001"}
+    ]
+
+// const names1 = (arr)=>{
+//     let text = ``
+//     for (let i in arr){
+//         text += `${i}) name:${arr[i].name}\n`
+//     }
+//     return console.log(text)
+// }
+// names1(movies)
+
+const names = movies.map((value, index)=>{
+    return `${index}) ${value.name}, ${value.releaseYear}`
+})
+
+console.log(names)

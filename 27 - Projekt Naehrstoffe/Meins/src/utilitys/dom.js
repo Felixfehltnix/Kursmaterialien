@@ -1,7 +1,7 @@
 "use strict"
 
 
-module.exports.on = function on(selector, eventType, cb) {
+export function on(selector, eventType, cb) {
     document.addEventListener(eventType, (event) => {
         let element = event.target
 

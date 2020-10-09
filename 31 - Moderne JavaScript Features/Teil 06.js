@@ -7,7 +7,7 @@ console.log("var1:", var1)
 */
 
 console.log(
-  Math.max(1, 2, 3, 4, 5, 6, -5)
+    Math.max(1, 2, 3, 4, 5, 6, -5)
 )
 
 /*
@@ -39,3 +39,6 @@ console.log(max(1, 2, 3))
 
 const n = [1, 2, 3, 4, 5, 6, 4]
 console.log(Math.max(...n))
+
+
+

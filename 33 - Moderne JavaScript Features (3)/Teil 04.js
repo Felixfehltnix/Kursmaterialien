@@ -14,11 +14,6 @@ class Student {
   }
 }
 
-const max = new Student("Max", "Mustermann")
+const felix = new Student("Felx", "Becker");
 
-setTimeout(max.getName, 1000)
-
-/*
-const element = document.getElementById("test")
-element.addEventListener("click", max.getName)
-*/
+setInterval(() => felix.getName(), 1000)
