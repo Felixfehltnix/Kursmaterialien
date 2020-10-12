@@ -10,9 +10,9 @@ const number2 = numbers.filter((value) => {
 
 const number2 = numbers
     .filter((v) => {
-        return  v % 2 === 0
+        return v % 2 === 0
     })
-    .map(v => v - 1)
+    // .map(v => v - 1)
 
 console.log(number2)
 
@@ -25,6 +25,6 @@ const movies = [
 ]
 
 
-const name = movies.map((value, index) =>`${index}) ${value.name}`)
+const name = movies.map((value, index) => `${index}) ${value.name}`)
 
 console.log(name)

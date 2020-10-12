@@ -1,148 +1,19 @@
-"use strict"
+"use Strict"
 
-const KEY_ENTER = 13
+const arr = [2, 213, 35, 25, 6324, 7, 234, 51, 6432, 6, 34, 56, 22, 4, 5, 32, 46, 45, 7, 3, 245, 235]
+const arr2 = [2, 213, 35, 24215, 6324, 27, 232134, 51, 6432, 63, 34, 56, 22, 43, 54, 326, 426, 45, 7, 3, 245, 235]
 
-const getId = (() => {
-    let counter = 0
-    return () => {
-        counter++
-        return counter
-    }
-})()
-
-const todoModule = {
-
-    todos: [],
-    /**
-     * Function creates a new entry and adds it to todos[]
-     * @param {string} title
-     */
-    addTodo(title) {
-        const newTodo = {
-            id: getId(),
-            title: title,
-            done: false,
-        }
-        this.todos.push(newTodo)
-        this.emit("add", newTodo)
-    },
-    /**
-     * Sets the "done" status of one entry in todos[] to true
-     * @param {number} id
-     */
-    completeTodo(id) {
-        for (const todo of this.todos) {
-            if (id === todo.id && todo.done === false) {
-                todo.done = true
-                this.emit("changeTodo", todo)
-            }
-        }
-    },
-    /**
-     * Sets the "done" status of one entry in todos[] to true
-     * @param {number} id
-     */
-    unCompleteTodo(id) {
-        for (const todo of this.todos) {
-            if (id === todo.id && todo.done === true) {
-                todo.done = false
-                this.emit("changeTodo", todo)
-            }
-        }
-    },
-    /**
-     * Removes one entry in todos[]
-     * @param {number} id
-     */
-    removeTodo(id) {
-        for (const i in this.todos) {
-            const todo = this.todos[i]
-            if (id === todo.id) {
-                this.todos.splice(i, 1);
-                this.emit("remove", todo)
-            }
-        }
-    },
-
-    //================================================
-    // Event emitter und event listener
-
-    events: {},
-
-    /**
-     *
-     * @param {string} eventName
-     * @param {function} callback
-     */
-    on(eventName, callback) {
-        if (!(eventName in this.events)) {
-            this.events[eventName] = [];
-        }
-        this.events[eventName].push(callback)
-    },
-
-
-    /**
-     *
-     * @param {string} eventName
-     * @param {*=} param
-     */
-    emit(eventName, param) {
-        if (eventName in this.events) {
-            for (const f of this.events[eventName]) {
-                f(param);
+const sort = function (arr) {
+    for (let i = arr.length; i > 0; i--) {
+        for (let j = 0; j < i; j++) {
+            if(arr[j]>arr[j+1]){
+                const temp = arr[j]
+                arr[j] = arr[j+1]
+                arr[j+1] = temp
             }
         }
     }
-
+    return arr
 }
 
-//========================================================================
-//DOM elemente zusammenbauen:
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    const elements = {
-        newTodo: document.querySelector(".new-todo"),
-        todoList: document.querySelector(".todo-list"),
-        footer: document.querySelector(".footer"),
-        todoCount: document.querySelector(".todo-count strong"),
-        clearCompleted: document.querySelector(".clear-completed")
-    }
-
-    elements.newTodo.addEventListener("keypress", (event) => {
-        const todoTitle = elements.newTodo.value
-        if (event.keyCode === KEY_ENTER && todoTitle !== "") {
-            todoModule.addTodo(todoTitle);
-            elements.newTodo.value = "";
-        }
-    })
-
-    todoModule.on("add",(todo)=>{
-        const labelElement = document.createElement("label")
-        labelElement.appendChild(document.createTextNode(todo.title))
-
-        const checkBox = document.createElement("input")
-        checkBox.classList.add("toggle")
-        checkBox.setAttribute("type","checkbox");
-
-        const deleteButton = document.createElement("button")
-        deleteButton.classList.add("destroy")
-
-        const divElement = document.createElement("div")
-        divElement.classList.add("view")
-        divElement.appendChild(checkBox)
-        divElement.appendChild(labelElement)
-        divElement.appendChild(deleteButton)
-
-        const liElement = document.createElement("li")
-        liElement.appendChild(divElement)
-
-        elements.todoList.prepend(liElement)
-    })
-
-})
-
-
-
-
+console.log(sort(arr2))
